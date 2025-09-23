@@ -122,6 +122,7 @@ def fetch_similar_documents(
         cursor.execute(sql_query, params)
         results = cursor.fetchall()
         print(f"found {len(results)} results")
+        print([row[0] for row in results])
         documents = [
             {
                 "content": row[0],

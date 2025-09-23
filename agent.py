@@ -14,6 +14,7 @@ def get_gemini_response(context: list[dict], query: str) -> str:
     """
     prompt = f"""
         You are a helpful assistant. Use the following context to answer the question.
+        Simplify the terms and answer in easy-to-understand language.
         If the context does not contain the answer, say "I don't know".
         Context: {context}
         Question: {query}

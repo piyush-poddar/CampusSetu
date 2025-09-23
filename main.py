@@ -19,7 +19,7 @@ def answer_query(query: str, branch: Optional[str] = "all", year: Optional[str] 
         query_embedding = get_embeddings([query])[0]
         
         # Step 2: Fetch similar documents from the database
-        similar_docs = fetch_similar_documents(query_embedding, top_k=5, branch=branch, year=year)
+        similar_docs = fetch_similar_documents(query_embedding, top_k=7, branch=branch, year=year)
         
         if not similar_docs:
             return "No relevant context found in the database."

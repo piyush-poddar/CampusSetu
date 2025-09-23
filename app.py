@@ -12,7 +12,7 @@ from db import insert
 
 # Page configuration
 st.set_page_config(
-    page_title="CampusSetu - Document Assistant",
+    page_title="CampusConnect - Document Assistant",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -62,7 +62,7 @@ if 'query_history' not in st.session_state:
 
 def main():
     # Header
-    st.markdown('<h1 class="main-header">🎓 CampusSetu Document Assistant</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🎓 CampusConnect Document Assistant</h1>', unsafe_allow_html=True)
     
     # Sidebar
     with st.sidebar:
@@ -220,8 +220,8 @@ def process_and_upload_document(uploaded_file, doc_name, branch, year, valid_fro
         status_text.text("✅ Upload completed successfully!")
         
         # Clean up temporary file
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
+        # if os.path.exists(temp_path):
+        #     os.remove(temp_path)
         
         st.success(f"""
         🎉 **Document uploaded successfully!**
@@ -309,8 +309,8 @@ def get_answer(query, branch, year, top_k):
     
     with st.spinner("🤔 Thinking..."):
         try:
-            # Get answer from your existing function
-            answer = answer_query(query)
+            # Get answer from your existing function with branch and year filters
+            answer = answer_query(query, branch, year)
             
             if answer and answer != "No relevant context found in the database.":
                 st.markdown("### 🎯 Answer:")
@@ -319,6 +319,15 @@ def get_answer(query, branch, year, top_k):
                 {answer}
                 </div>
                 """, unsafe_allow_html=True)
+                
+                # Show which filters were applied
+                if branch != "all" or year != "all":
+                    filter_info = []
+                    if branch != "all":
+                        filter_info.append(f"Branch: {branch}")
+                    if year != "all":
+                        filter_info.append(f"Year: {year}")
+                    st.info(f"🔍 Filters applied: {', '.join(filter_info)}")
                 
                 # Add to history
                 st.session_state.query_history.append({
